@@ -11,8 +11,8 @@ const App = ({ dispatch, loading }) => {
   return <div>{loading === true ? null : <Dashboard />}</div>;
 };
 
-const mapStateToProps = ({ authedUsers }) => {
-  return { loading: authedUsers === null };
+const mapStateToProps = ({ authedUser }) => {
+  return { loading: authedUser === null };
 };
 
 export default connect(mapStateToProps)(App);
