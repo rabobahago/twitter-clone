@@ -1,19 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import { connect } from "react-redux";
-class Dashboard extends Component {
-  render() {
-    return (
-      <div>
-        <h3 className="center">Your Timeline</h3>
-        <ul className="dashboard-list">
-          {this.props.tweetIds.map((id) => (
-            <li key={id}>TWEET ID: {id}</li>
-          ))}
-        </ul>
-      </div>
-    );
-  }
-}
+const Dashboard = ({ tweetIds }) => {
+  return (
+    <div>
+      <h3 className="center">Your Timeline</h3>
+      <ul className="dashboard-list">
+        {tweetIds.map((id) => (
+          <li key={id}>TWEET ID: {id}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
 const mapStateToProps = ({ tweets: { tweets } }) => {
   return {
     tweetIds: Object.keys(tweets).sort(

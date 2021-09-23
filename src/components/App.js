@@ -1,16 +1,16 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { handleInitialData } from "../actions/shared";
 import Dashboard from "./Dashboard";
 
-class App extends Component {
-  componentDidMount() {
-    this.props.dispatch(handleInitialData());
-  }
-  render() {
-    return <div>{this.props.loading === true ? null : <Dashboard />}</div>;
-  }
-}
+const App = ({ dispatch, loading }) => {
+  useEffect(() => {
+    dispatch(handleInitialData());
+  }, [dispatch]);
+
+  return <div>{loading === true ? null : <Dashboard />}</div>;
+};
+
 const mapStateToProps = ({ authedUsers }) => {
   return { loading: authedUsers === null };
 };
