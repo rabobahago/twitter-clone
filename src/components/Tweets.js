@@ -1,21 +1,68 @@
 import React from "react";
 import { connect } from "react-redux";
-import { formatTweet } from "../utils/helpers";
+import { formatTweet, formatDate } from "../utils/helpers";
+import {
+  TiArrowBackOutline,
+  TiHeartOutline,
+  TiHeartFullOutline
+} from "react-icons/ti";
 
-const Tweet = (props) => {
+const Tweet = ({ tweet }) => {
+  const toParent = (e, id) => {
+    e.preventDefault();
+  };
+  const handleLike = (e) => {
+    e.preventDefault();
+  };
+  if (tweet === null) {
+    return <h2>This Tweet don't exist</h2>;
+  }
+  const { name, avatar, timestamp, text, hasLiked, likes, replies, parent } =
+    tweet;
+
   return (
     <div className="tweet">
-      <h4>Hello</h4>
+      <img src={avatar} alt={`Avatar of ${name}`} className="avatar" />
+      <div className="tweet-info">
+        <div>
+          <span>{name}</span>
+          <div>{formatDate(timestamp)}</div>
+          {parent && (
+            <button
+              className="replying-to"
+              onClick={(e) => toParent(e, parent.id)}
+            >
+              Replying to @{parent.author}
+            </button>
+          )}
+          <p>{text}</p>
+        </div>
+
+        <div className="tweet-icons">
+          <TiArrowBackOutline className="tweet-icon" />
+          <span>{replies !== 0 && replies}</span>
+          <button className="heart-button" onClick={handleLike}>
+            {hasLiked === true ? (
+              <TiHeartFullOutline color="#e0245e" className="tweet-icon" />
+            ) : (
+              <TiHeartOutline className="tweet-icon" />
+            )}
+          </button>
+          <span>{likes !== 0 && likes}</span>
+        </div>
+      </div>
     </div>
   );
 };
 
 const mapStateToProps = ({ authedUser, users, tweets }, { id }) => {
   const tweet = tweets[id];
-  const parentTweet = tweets[tweet.replyingTo];
+  const parentTweet = tweet ? tweets[tweet.replyingTo] : null;
   return {
     authedUser,
-    tweet: formatTweet(tweet, users[tweet.author], authedUser, parentTweet)
+    tweet: tweet
+      ? formatTweet(tweet, users[tweet.author], authedUser, parentTweet)
+      : null
   };
 };
 
