@@ -8,7 +8,7 @@ export const receiveTweets = (tweets) => {
   };
 };
 
-export const toggleTweets = (id, authedUser, hasLiked) => {
+export const toggleTweets = ({ id, authedUser, hasLiked }) => {
   return {
     type: TOGGLE_TWEETS,
     id,

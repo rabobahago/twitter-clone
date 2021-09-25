@@ -6,13 +6,21 @@ import {
   TiHeartOutline,
   TiHeartFullOutline
 } from "react-icons/ti";
+import { handleToggleTweets } from "../actions/tweets";
 
-const Tweet = ({ tweet }) => {
+const Tweet = ({ tweet, dispatch, authedUser }) => {
   const toParent = (e, id) => {
     e.preventDefault();
   };
   const handleLike = (e) => {
     e.preventDefault();
+    dispatch(
+      handleToggleTweets({
+        id: tweet.id,
+        hasLiked: tweet.hasLiked,
+        authedUser
+      })
+    );
   };
   if (tweet === null) {
     return <h2>This Tweet don't exist</h2>;
