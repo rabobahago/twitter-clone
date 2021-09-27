@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { handleAddTweet } from "../actions/tweets";
+
 const NewTweet = ({ dispatch, id }) => {
   const [text, setText] = useState({ message: "" });
 

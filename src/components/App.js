@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { handleInitialData } from "../actions/shared";
-// import Dashboard from "./Dashboard";
 import LoadingBar from "react-redux-loading";
-import NewTweet from "./NewTweet";
+//import NewTweet from "./NewTweet";
+import TweetPage from "./TweetPage";
+//import Dashboard from "./Dashboard";
 
 const App = ({ dispatch, loading }) => {
   useEffect(() => {
@@ -13,11 +14,13 @@ const App = ({ dispatch, loading }) => {
   return (
     <div>
       <LoadingBar />
-      {loading === true ? null : <NewTweet />}
+      {loading === true ? null : (
+        <TweetPage match={{ params: { id: "8xf0y6ziyjabvozdd253nd" } }} />
+      )}
     </div>
   );
 };
-
+// 8xf0y6ziyjabvozdd253nd
 const mapStateToProps = ({ authedUser }) => {
   return { loading: authedUser === null };
 };
