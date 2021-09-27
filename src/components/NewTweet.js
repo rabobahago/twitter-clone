@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { handleAddTweet } from "../actions/tweets";
+import { Redirect } from "react-router-dom";
 
 const NewTweet = ({ dispatch, id }) => {
   const [text, setText] = useState({ message: "" });
+  const [isHome, setIsHome] = useState({ toHome: false });
 
   const handleChange = (e) => {
     setText({
@@ -13,13 +15,18 @@ const NewTweet = ({ dispatch, id }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(handleAddTweet(text.message, id));
+    setIsHome({
+      toHome: id ? isHome.toHome : !isHome.toHome
+    });
     setText({
       message: ""
     });
   };
 
   const tweetLeft = 280 - text.message.length;
-  return (
+  return isHome.toHome === true ? (
+    <Redirect to="/" />
+  ) : (
     <div>
       <h3 className="center">Compose new Tweet</h3>
       <form className="new-tweet" onSubmit={handleSubmit}>

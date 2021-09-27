@@ -1,5 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
+import { Link, withRouter } from "react-router-dom";
 import { formatTweet, formatDate } from "../utils/helpers";
 import {
   TiArrowBackOutline,
@@ -8,9 +9,10 @@ import {
 } from "react-icons/ti";
 import { handleToggleTweets } from "../actions/tweets";
 
-const Tweet = ({ tweet, dispatch, authedUser }) => {
+const Tweet = ({ tweet, dispatch, authedUser, history }) => {
   const toParent = (e, id) => {
     e.preventDefault();
+    history.push(`/tweet/${id}`);
   };
   const handleLike = (e) => {
     e.preventDefault();
@@ -25,11 +27,20 @@ const Tweet = ({ tweet, dispatch, authedUser }) => {
   if (tweet === null) {
     return <h2>This Tweet don't exist</h2>;
   }
-  const { name, avatar, timestamp, text, hasLiked, likes, replies, parent } =
-    tweet;
+  const {
+    name,
+    avatar,
+    timestamp,
+    text,
+    hasLiked,
+    likes,
+    replies,
+    id,
+    parent
+  } = tweet;
 
   return (
-    <div className="tweet">
+    <Link to={`/tweet/${id}`} className="tweet">
       <img src={avatar} alt={`Avatar of ${name}`} className="avatar" />
       <div className="tweet-info">
         <div>
@@ -59,7 +70,7 @@ const Tweet = ({ tweet, dispatch, authedUser }) => {
           <span>{likes !== 0 && likes}</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -74,4 +85,4 @@ const mapStateToProps = ({ authedUser, users, tweets }, { id }) => {
   };
 };
 
-export default connect(mapStateToProps)(Tweet);
+export default withRouter(connect(mapStateToProps)(Tweet));
